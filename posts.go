@@ -53,7 +53,7 @@ type Excerpt struct {
 }
 
 type Post struct {
-	collection *PostsCollection `json:"-,omitempty"`
+	collection *PostsCollection `json:"-"`
 
 	ID            int     `json:"id,omitempty"`
 	Date          string  `json:"date,omitempty"`

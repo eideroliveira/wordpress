@@ -68,6 +68,7 @@ func cleanUpMedia(t *testing.T, wp *wordpress.Client, mediaID int) {
 		t.Errorf("Expected 200 StatusOK, got %v", resp.Status)
 	}
 	if deletedMedia.ID != mediaID {
+		t.Logf("Deleted media: %v", deletedMedia)
 		t.Errorf("Deleted comment ID should be the same as newly created comment: %v != %v", deletedMedia.ID, mediaID)
 	}
 }

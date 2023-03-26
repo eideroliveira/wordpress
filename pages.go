@@ -76,8 +76,8 @@ func (col *PagesCollection) List(params interface{}) ([]Page, *http.Response, []
 	resp, body, err := col.client.List(col.url, params, &pages)
 
 	// set collection object for each entity which has sub-collection
-	for _, p := range pages {
-		p.setCollection(col)
+	for i := range pages {
+		pages[i].setCollection(col)
 	}
 
 	return pages, resp, body, err

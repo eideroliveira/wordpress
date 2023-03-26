@@ -5,10 +5,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/parnurzeal/gorequest"
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/parnurzeal/gorequest"
 )
 
 var DEBUG bool = (os.Getenv("DEBUG") == "1")
@@ -43,11 +44,11 @@ func unmarshallResponse(resp gorequest.Response, body []byte, result interface{}
 }
 
 func _warning(v ...interface{}) {
-	log.Println(fmt.Sprintln("[go-wordpress]", v))
+	log.Println(fmt.Sprintln("[wordpress]", v))
 }
 
 func _log(v ...interface{}) {
-	log.Println(fmt.Sprintln("[go-wordpress]", v))
+	log.Println(fmt.Sprintln("[wordpress]", v))
 }
 
 // UnmarshallServerError A helper function to unmarshall error response from server

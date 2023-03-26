@@ -6,18 +6,23 @@ import (
 )
 
 type Revision struct {
-	ID          int    `json:"id,omitempty"`
-	Author      string `json:"author,omitempty"` // TODO: File a WP-API bug, why am I getting string instead of int?
-	Date        string `json:"date,omitempty"`
-	DateGMT     string `json:"dateGMT,omitempty"`
-	GUID        string `json:"guid,omitempty"`
-	Modified    string `json:"modified,omitempty"`
-	ModifiedGMT string `json:"modifiedGMT,omitempty"`
-	Parent      int    `json:"parent,omitempty"`
-	Slug        string `json:"slug,omitempty"`
-	Title       string `json:"title,omitempty"`
-	Content     string `json:"content,omitempty"`
-	Excerpt     string `json:"excerpt,omitempty"`
+	ID          int          `json:"id,omitempty"`
+	Author      int          `json:"author,omitempty"` // TODO: File a WP-API bug, why am I getting string instead of int?
+	Date        string       `json:"date,omitempty"`
+	DateGMT     string       `json:"dateGMT,omitempty"`
+	GUID        RenderedText `json:"guid,omitempty"`
+	Modified    string       `json:"modified,omitempty"`
+	ModifiedGMT string       `json:"modifiedGMT,omitempty"`
+	Parent      int          `json:"parent,omitempty"`
+	Slug        string       `json:"slug,omitempty"`
+	Title       RenderedText `json:"title,omitempty"`
+	Content     RenderedText `json:"content,omitempty"`
+	Excerpt     RenderedText `json:"excerpt,omitempty"`
+}
+
+type RenderedText struct {
+	Rendered string `json:"rendered,omitempty"`
+	Raw      string `json:"raw,omitempty"`
 }
 
 type RevisionsCollection struct {

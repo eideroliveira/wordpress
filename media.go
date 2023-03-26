@@ -5,6 +5,14 @@ import (
 	"net/http"
 )
 
+type MediaCaption struct {
+	Raw      string `json:"raw,omitempty"`
+	Rendered string `json:"rendered,omitempty"`
+}
+type MediaDescription struct {
+	Raw      string `json:"raw,omitempty"`
+	Rendered string `json:"rendered,omitempty"`
+}
 type MediaDetailsSizesItem struct {
 	File      string `json:"file,omitempty"`
 	Width     int    `json:"width,omitempty"`
@@ -33,28 +41,28 @@ type MediaUploadOptions struct {
 	Data        []byte
 }
 type Media struct {
-	ID           int          `json:"id,omitempty"`
-	Date         string       `json:"date,omitempty"`
-	DateGMT      string       `json:"date_gmt,omitempty"`
-	GUID         GUID         `json:"guid,omitempty"`
-	Link         string       `json:"link,omitempty"`
-	Modified     string       `json:"modified,omitempty"`
-	ModifiedGMT  string       `json:"modifiedGMT,omitempty"`
-	Password     string       `json:"password,omitempty"`
-	Slug         string       `json:"slug,omitempty"`
-	Status       string       `json:"status,omitempty"`
-	Type         string       `json:"type,omitempty"`
-	Title        Title        `json:"title,omitempty"`
-	Author       int          `json:"author,omitempty"`
-	MediaStatus  string       `json:"comment_status,omitempty"`
-	PingStatus   string       `json:"ping_status,omitempty"`
-	AltText      string       `json:"alt_text,omitempty"`
-	Caption      string       `json:"caption,omitempty"`
-	Description  string       `json:"description,omitempty"`
-	MediaType    string       `json:"media_type,omitempty"`
-	MediaDetails MediaDetails `json:"media_details,omitempty"`
-	Post         int          `json:"post,omitempty"`
-	SourceURL    string       `json:"source_url,omitempty"`
+	ID           int              `json:"id,omitempty"`
+	Date         string           `json:"date,omitempty"`
+	DateGMT      string           `json:"date_gmt,omitempty"`
+	GUID         GUID             `json:"guid,omitempty"`
+	Link         string           `json:"link,omitempty"`
+	Modified     string           `json:"modified,omitempty"`
+	ModifiedGMT  string           `json:"modifiedGMT,omitempty"`
+	Password     string           `json:"password,omitempty"`
+	Slug         string           `json:"slug,omitempty"`
+	Status       string           `json:"status,omitempty"`
+	Type         string           `json:"type,omitempty"`
+	Title        Title            `json:"title,omitempty"`
+	Author       int              `json:"author,omitempty"`
+	MediaStatus  string           `json:"comment_status,omitempty"`
+	PingStatus   string           `json:"ping_status,omitempty"`
+	AltText      string           `json:"alt_text,omitempty"`
+	Caption      MediaCaption     `json:"caption,omitempty"`
+	Description  MediaDescription `json:"description,omitempty"`
+	MediaType    string           `json:"media_type,omitempty"`
+	MediaDetails MediaDetails     `json:"media_details,omitempty"`
+	Post         int              `json:"post,omitempty"`
+	SourceURL    string           `json:"source_url,omitempty"`
 }
 type MediaCollection struct {
 	client *Client

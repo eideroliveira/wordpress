@@ -11,7 +11,7 @@ type AvatarURLS struct {
 	Size96 string `json:"96,omitempty"`
 }
 type User struct {
-	collection *UsersCollection `json:"-,omitempty"`
+	collection *UsersCollection `json:"-"`
 
 	ID                int                    `json:"id,omitempty"`
 	AvatarURL         string                 `json:"avatar_url,omitempty"`

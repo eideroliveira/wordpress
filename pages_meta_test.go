@@ -33,7 +33,7 @@ func TestPagesMeta_InvalidCall(t *testing.T) {
 	invalidPage := wordpress.Page{}
 	invalidMeta := invalidPage.Meta()
 	if invalidMeta != nil {
-		t.Error("Expected meta to be nil, %v", invalidMeta)
+		t.Errorf("Expected meta to be nil, %v", invalidMeta)
 	}
 }
 
@@ -44,7 +44,9 @@ func TestPagesMetaList_NoParams(t *testing.T) {
 
 	meta, resp, body, err := page.Meta().List(nil)
 	if err != nil {
-		t.Errorf("Should not return error: %v", err.Error())
+		t.Logf("body: %v", string(body))
+		t.Logf("resp: %v", resp)
+		t.Errorf("Should not return error: %v", err)
 	}
 	if body == nil {
 		t.Errorf("Should not return nil body")
