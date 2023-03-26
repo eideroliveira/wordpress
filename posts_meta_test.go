@@ -1,9 +1,10 @@
 package wordpress_test
 
 import (
-	"github.com/sogko/go-wordpress"
 	"net/http"
 	"testing"
+
+	"github.com/eideroliveira/wordpress"
 )
 
 func cleanUpPostMeta(t *testing.T, post *wordpress.Post, metaId int) {

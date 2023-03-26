@@ -1,10 +1,11 @@
 package wordpress_test
 
 import (
-	"github.com/sogko/go-wordpress"
 	"log"
 	"net/http"
 	"testing"
+
+	"github.com/eideroliveira/wordpress"
 )
 
 func factoryTermsCategory() *wordpress.Term {
