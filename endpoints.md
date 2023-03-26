@@ -26,7 +26,7 @@ List of WP-API REST endpoints and implementation status
 - [x] `PUT    /[parent_base]/[parent_id]/meta/[id]`
 - [x] `DELETE /[parent_base]/[parent_id]/meta/[id]`
 
-`[parent_base] = "posts" | "pages"`
+`[parent_base] = "posts" | "pages" | "users"`
 
 ### Meta Posts
 
@@ -43,6 +43,14 @@ List of WP-API REST endpoints and implementation status
 - [x] `GET    /pages/[post_id]/meta/[id]`
 - [x] `PUT    /pages/[post_id]/meta/[id]`
 - [x] `DELETE /pages/[post_id]/meta/[id]`
+
+### Meta Users
+
+- [x] `GET    /users/[user_id]/meta`
+- [x] `POST   /users/[user_id]/meta`
+- [x] `GET    /users/[user_id]/meta/[id]`
+- [x] `PUT    /users/[user_id]/meta/[id]`
+- [x] `DELETE /users/[user_id]/meta/[id]`
 
 ## Post Statuses
 
