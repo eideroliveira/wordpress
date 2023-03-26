@@ -64,8 +64,8 @@ func (col *UsersCollection) List(params interface{}) ([]User, *http.Response, []
 	var users []User
 	resp, body, err := col.client.List(col.url, params, &users)
 	// set collection object for each entity which has sub-collection
-	for _, u := range users {
-		u.setCollection(col)
+	for i := range users {
+		users[i].setCollection(col)
 	}
 
 	return users, resp, body, err

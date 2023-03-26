@@ -134,8 +134,8 @@ func (col *PostsCollection) List(params interface{}) ([]Post, *http.Response, []
 	resp, body, err := col.client.List(col.url, params, &posts)
 
 	// set collection object for each entity which has sub-collection
-	for _, p := range posts {
-		p.setCollection(col)
+	for i := range posts {
+		posts[i].setCollection(col)
 	}
 
 	return posts, resp, body, err
