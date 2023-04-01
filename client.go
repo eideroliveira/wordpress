@@ -3,11 +3,12 @@ package wordpress
 import (
 	"bytes"
 	"fmt"
-	"github.com/parnurzeal/gorequest"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"reflect"
+
+	"github.com/parnurzeal/gorequest"
 )
 
 const (
@@ -49,6 +50,7 @@ type Client struct {
 func newHTTPClient() *gorequest.SuperAgent {
 	client := gorequest.New()
 	client.Client = &http.Client{Jar: nil}
+	client.Debug = false
 	client.Transport = &http.Transport{
 		DisableKeepAlives: true,
 	}

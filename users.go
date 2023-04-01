@@ -13,7 +13,7 @@ type AvatarURLS struct {
 type User struct {
 	collection *UsersCollection `json:"-"`
 
-	ID                int                    `json:"id,omitempty"`
+	ID                int64                  `json:"id,omitempty"`
 	AvatarURL         string                 `json:"avatar_url,omitempty"`
 	AvatarURLs        AvatarURLS             `json:"avatar_urls,omitempty"`
 	Capabilities      map[string]interface{} `json:"capabilities,omitempty"`
