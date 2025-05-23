@@ -33,6 +33,7 @@ type GeneralError struct {
 
 type Options struct {
 	BaseAPIURL string
+	Debug      bool
 
 	// Basic Auth
 	Username string
@@ -67,6 +68,7 @@ func NewClient(options *Options) *Client {
 		log.Println("REDIRECT", r, options.Username, options.Password)
 		return nil
 	})
+	req.Debug = options.Debug
 	return &Client{
 		req:     req,
 		options: options,
