@@ -8,13 +8,11 @@ import (
 	"log"
 	"net/http"
 	"os"
-
-	"github.com/parnurzeal/gorequest"
 )
 
 var DEBUG bool = (os.Getenv("DEBUG") == "1")
 
-func unmarshallResponse(resp gorequest.Response, body []byte, result interface{}) error {
+func unmarshallResponse(resp *http.Response, body []byte, result interface{}) error {
 
 	var prettyJSON bytes.Buffer
 	err2 := json.Indent(&prettyJSON, body, "", "  ")
