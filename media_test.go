@@ -12,14 +12,14 @@ import (
 func factoryMediaFileUpload(t *testing.T) *wordpress.MediaUploadOptions {
 
 	// assuming current-working directory `{GO_WORKSPACE_PATH}/src/github.com/eideroliveira/wordpress`
-	path := "./test-data/test-media.jpg"
+	// assuming current-working directory `{GO_WORKSPACE_PATH}/src/github.com/eideroliveira/wordpress`
 
 	// prepare file to upload
-	file, err := os.Open(path)
-	defer file.Close()
+	file, err := os.Open("./fixtures/test.png")
 	if err != nil {
-		t.Fatalf("Failed to open test media file to upload: %v", err.Error())
+		t.Fatal(err)
 	}
+	defer file.Close()
 	fileContents, err := ioutil.ReadAll(file)
 	if err != nil {
 		t.Fatalf("Failed to read test media file to upload: %v", err.Error())

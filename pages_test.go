@@ -1,7 +1,6 @@
 package wordpress_test
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"testing"
@@ -243,7 +242,7 @@ func TestPagesUpdate(t *testing.T) {
 	}
 
 	// update the newly created page's title
-	newTitle := fmt.Sprintf("TestPagesUpdate")
+	newTitle := "TestPagesUpdate"
 	if page.Title.Raw == newTitle {
 		t.Fatalf("New title should be different if we want to test properly")
 	}
