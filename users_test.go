@@ -30,7 +30,7 @@ func cleanUpUser(t *testing.T, userID int) {
 	if resp.StatusCode != http.StatusOK {
 		t.Errorf("Expected 200 StatusOK, got %v", resp.Status)
 	}
-	if deletedUser.ID != userID {
+	if deletedUser.ID != int64(userID) {
 		t.Errorf("Deleted user ID should be the same as newly created user: %v != %v", deletedUser.ID, userID)
 	}
 }
@@ -46,7 +46,7 @@ func getAnyOneUser(t *testing.T, wp *wordpress.Client) *wordpress.User {
 
 	userID := users[0].ID
 
-	user, resp, _, _ := wp.Users().Get(userID, "context=edit")
+	user, resp, _, _ := wp.Users().Get(int(userID), "context=edit")
 	if resp.StatusCode != http.StatusOK {
 		t.Errorf("Expected 200 OK, got %v", resp.Status)
 	}
@@ -97,7 +97,7 @@ func TestUsersGet(t *testing.T) {
 
 	u := getAnyOneUser(t, wp)
 
-	user, resp, body, err := wp.Users().Get(u.ID, nil)
+	user, resp, body, err := wp.Users().Get(int(u.ID), nil)
 	if err != nil {
 		t.Errorf("Should not return error: %v", err.Error())
 	}
@@ -138,7 +138,7 @@ func TestUsersCreate(t *testing.T) {
 	}
 
 	// clean up
-	cleanUpUser(t, newUser.ID)
+	cleanUpUser(t, int(newUser.ID))
 }
 
 func TestUsersDelete(t *testing.T) {
@@ -155,7 +155,7 @@ func TestUsersDelete(t *testing.T) {
 
 	// Note that deleting a user requires `force=true` since `users` resource does not support trashing
 	// If not specified, a 501 NotImplemented will be returned
-	deletedUser, resp, body, err := wp.Users().Delete(newUser.ID, "force=true")
+	deletedUser, resp, body, err := wp.Users().Delete(int(newUser.ID), "force=true")
 	if err != nil {
 		t.Errorf("Should not return error: %v", err.Error())
 	}
@@ -184,7 +184,7 @@ func TestUsersUpdate(t *testing.T) {
 	}
 
 	// get user in `edit` context
-	user, resp, _, _ := wp.Users().Get(newUser.ID, "context=edit")
+	user, resp, _, _ := wp.Users().Get(int(newUser.ID), "context=edit")
 	if resp.StatusCode != http.StatusOK {
 		t.Errorf("Expected 200 OK, got %v", resp.Status)
 	}
@@ -200,7 +200,7 @@ func TestUsersUpdate(t *testing.T) {
 	user.Email = newUserEmail
 
 	// update
-	updatedUser, resp, body, err := wp.Users().Update(user.ID, user)
+	updatedUser, resp, body, err := wp.Users().Update(int(user.ID), user)
 	if err != nil {
 		t.Errorf("Should not return error: %v", err.Error())
 	}
@@ -215,5 +215,5 @@ func TestUsersUpdate(t *testing.T) {
 	}
 
 	// clean up
-	cleanUpUser(t, newUser.ID)
+	cleanUpUser(t, int(newUser.ID))
 }
