@@ -61,7 +61,7 @@ type Post struct {
 	GUID          GUID    `json:"guid,omitempty"`
 	Link          string  `json:"link,omitempty"`
 	Modified      string  `json:"modified,omitempty"`
-	ModifiedGMT   string  `json:"modifiedGMT,omitempty"`
+	ModifiedGMT   string  `json:"modified_gmt,omitempty"`
 	Password      string  `json:"password,omitempty"`
 	Slug          string  `json:"slug,omitempty"`
 	Status        string  `json:"status,omitempty"`
@@ -70,7 +70,7 @@ type Post struct {
 	Content       Content `json:"content,omitempty"`
 	Author        int     `json:"author,omitempty"`
 	Excerpt       Excerpt `json:"excerpt,omitempty"`
-	FeaturedImage int     `json:"featured_image,omitempty"`
+	FeaturedMedia int     `json:"featured_media,omitempty"`
 	CommentStatus string  `json:"comment_status,omitempty"`
 	PingStatus    string  `json:"ping_status,omitempty"`
 	Format        string  `json:"format,omitempty"`

@@ -9,10 +9,10 @@ type Revision struct {
 	ID          int          `json:"id,omitempty"`
 	Author      int          `json:"author,omitempty"` // TODO: File a WP-API bug, why am I getting string instead of int?
 	Date        string       `json:"date,omitempty"`
-	DateGMT     string       `json:"dateGMT,omitempty"`
+	DateGMT     string       `json:"date_gmt,omitempty"`
 	GUID        RenderedText `json:"guid,omitempty"`
 	Modified    string       `json:"modified,omitempty"`
-	ModifiedGMT string       `json:"modifiedGMT,omitempty"`
+	ModifiedGMT string       `json:"modified_gmt,omitempty"`
 	Parent      int          `json:"parent,omitempty"`
 	Slug        string       `json:"slug,omitempty"`
 	Title       RenderedText `json:"title,omitempty"`
