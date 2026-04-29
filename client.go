@@ -35,10 +35,24 @@ type Options struct {
 	BaseAPIURL string
 	Debug      bool
 
-	// Basic Auth
+	// Basic Auth (WP Application Passwords).
 	Username string
 	Password string
-	// TODO: support OAuth authentication
+
+	// JWT Bearer token (jwt-auth plugin). When set, takes precedence over Basic Auth.
+	JwtToken string
+}
+
+// applyAuth sets the Authorization header on req using whichever credential
+// is configured: JWT bearer first, then Basic Auth.
+func (o *Options) applyAuth(req *http.Request) {
+	if o.JwtToken != "" {
+		req.Header.Set("Authorization", "Bearer "+o.JwtToken)
+		return
+	}
+	if o.Username != "" && o.Password != "" {
+		req.SetBasicAuth(o.Username, o.Password)
+	}
 }
 
 type Client struct {
@@ -57,10 +71,8 @@ func newHTTPClient(options *Options) *http.Client {
 		Transport: transport,
 		Jar:       nil, // Explicitly nil, as gorequest did
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
-			// Apply basic auth to all redirect requests
-			if options.Username != "" && options.Password != "" {
-				req.SetBasicAuth(options.Username, options.Password)
-			}
+			// Re-apply auth on redirect (Go drops Authorization across hosts).
+			options.applyAuth(req)
 			if options.Debug {
 				log.Printf("REDIRECT: Request to %s via %d hops", req.URL, len(via))
 			}
@@ -195,9 +207,7 @@ func (client *Client) List(url_ string, params interface{}, result interface{}) 
 	}
 
 	req.Header.Set("Accept", "application/json")
-	if client.options.Username != "" && client.options.Password != "" {
-		req.SetBasicAuth(client.options.Username, client.options.Password)
-	}
+	client.options.applyAuth(req)
 
 	if client.options.Debug {
 		log.Printf("Request: GET %s, Params: %+v\\n", url_, params)
@@ -235,9 +245,7 @@ func (client *Client) Create(url string, content interface{}, result interface{}
 
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
-	if client.options.Username != "" && client.options.Password != "" {
-		req.SetBasicAuth(client.options.Username, client.options.Password)
-	}
+	client.options.applyAuth(req)
 
 	if client.options.Debug {
 		log.Printf("Request: POST %s, Body: %s\\n", url, string(jsonBody))
@@ -289,9 +297,7 @@ func (client *Client) Get(url string, params interface{}, result interface{}) (*
 	}
 
 	req.Header.Set("Accept", "application/json")
-	if client.options.Username != "" && client.options.Password != "" {
-		req.SetBasicAuth(client.options.Username, client.options.Password)
-	}
+	client.options.applyAuth(req)
 
 	if client.options.Debug {
 		log.Printf("Request: GET %s, Params: %+v\\n", url, params)
@@ -332,9 +338,7 @@ func (client *Client) Update(url string, content interface{}, result interface{}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("X-HTTP-Method-Override", "PUT") // As per original logic
-	if client.options.Username != "" && client.options.Password != "" {
-		req.SetBasicAuth(client.options.Username, client.options.Password)
-	}
+	client.options.applyAuth(req)
 
 	if client.options.Debug {
 		log.Printf("Request: POST (Update via X-HTTP-Method-Override: PUT) %s, Body: %s\\n", url, string(jsonBody))
@@ -444,9 +448,7 @@ func (client *Client) Delete(url_ string, params interface{}, result interface{}
 	}
 	req.Header.Set("X-HTTP-Method-Override", "DELETE")
 	req.Header.Set("Accept", "application/json") // Assuming JSON response for delete status/message
-	if client.options.Username != "" && client.options.Password != "" {
-		req.SetBasicAuth(client.options.Username, client.options.Password)
-	}
+	client.options.applyAuth(req)
 
 	if client.options.Debug {
 		log.Printf("Request: GET (Delete via X-HTTP-Method-Override) %s, Params: %+v\\n", finalURL, params)
@@ -498,9 +500,7 @@ func (client *Client) PostData(url string, content []byte, contentType string, f
 	}
 
 	req.Header.Set("Accept", "application/json") // Assuming JSON response
-	if client.options.Username != "" && client.options.Password != "" {
-		req.SetBasicAuth(client.options.Username, client.options.Password)
-	}
+	client.options.applyAuth(req)
 
 	if client.options.Debug {
 		log.Printf("Request: POST %s, ContentType: %s, Filename: %s, ContentLength: %d\\n", url, contentType, filename, len(content))
